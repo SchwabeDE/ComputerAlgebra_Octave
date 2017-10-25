@@ -1,0 +1,26 @@
+# Created by Octave 4.2.1, Wed Oct 25 20:50:24 2017 GMT <unknown@unknown>
+# name: a
+# type: scalar
+0.01
+
+
+# name: b
+# type: scalar
+0.01
+
+
+# name: cleanIterationSum
+# type: scalar
+0
+
+
+# name: e
+# type: scalar
+1.000000000000001e-009
+
+
+# name: requiredWaterVolume
+# type: scalar
+0
+
+
