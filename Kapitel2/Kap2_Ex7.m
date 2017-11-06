@@ -3,7 +3,7 @@ format short;
 #Ex 2.7 
 ##GLOBAL VARIABLES
 a = 0.01
-b = 0.01
+b = 1.00
 e = 10 ** -9
 
 #Ex 2.7 a)
