@@ -11,15 +11,14 @@ n = rows(A)
 m = columns(A)
 
 
-for k = 1 : min(m, n)
-  [max_values i_max] = max(abs(A(k:m, k)))
-  #i_max = i_max + (k - 1)
+for k = 1 : n
+  [max_values a_mk] = max(abs(A(k:m, k)))
   if A(i_max, k) == 0
     error("Matrix singular");
   end;
   A([k i_max], :) = A([i_max k], :);
   
-  for i = k + 1 : m
+  for i = k + 1 : n
     f = A(i, k) / A(k, k);
     for j = k + 1 : n
       A(i, j) = A(i, j) - A(k, j) * f;
