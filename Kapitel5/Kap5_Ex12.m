@@ -27,22 +27,24 @@ function [m] = intervalBisection(f, aInit, bInit, threshold)
   until(currPoint == 0 || threshold <= rounds )
 endfunction
 
-#{
+
 function [ret] = f(x)
+  #{
   if(x == 1 || x == -1)
     x = 1;
   end
+  #}
   ret = (x*(1-x)) / (1- x**2);
 endfunction
-#}
 
+#{
 function [ret] = f(x)
   ret = x - 2;
 endfunction
-
+#}
   
 a = -4;
-b = 4;
+b = -1/2;
 result = intervalBisection(@f, a, b, 150)
 
 xPlot = [];
