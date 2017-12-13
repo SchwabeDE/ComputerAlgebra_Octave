@@ -1,15 +1,18 @@
 source("../opt.m");
 disp("\n*********************************************************************");
-#Lab Ex 1.1
-disp("***Lab Ex 1.1 \n");
+#Lab Ex 1.1 a)
+disp("***Lab Ex 1.1 a)\n");
 file = fopen ("inputLab1_1.txt", "r");
 data = dlmread(file);
+fclose(file);
 
 disp("Fileinput:\n");
 data
 
 A = data(:,1:end - 1)
 b = data(:,end)
+
+disp("Properties of matrix A:\n");
 
 rankA = rank(A)
 
@@ -38,4 +41,14 @@ else
   cannot be determined because it is NO square matrix!\n");
 end;  
 
-fclose(file);
+#Lab Ex 1.1 b)
+disp("***Lab Ex 1.1 b)\n");
+
+#Solve A * x = b
+x = A \ b
+
+
+#Lab Ex 1.1 c)
+disp("***Lab Ex 1.1 c)\n");
+
+
