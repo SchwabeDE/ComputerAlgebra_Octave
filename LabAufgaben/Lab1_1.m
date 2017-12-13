@@ -2,6 +2,7 @@ source("../opt.m");
 disp("\n*********************************************************************");
 #Lab Ex 1.1 a)
 disp("***Lab Ex 1.1 a)\n");
+
 file = fopen ("inputLab1_1.txt", "r");
 data = dlmread(file);
 fclose(file);
@@ -50,5 +51,7 @@ x = A \ b
 
 #Lab Ex 1.1 c)
 disp("***Lab Ex 1.1 c)\n");
+
+
 
 
