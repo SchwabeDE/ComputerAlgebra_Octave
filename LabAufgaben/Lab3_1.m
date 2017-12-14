@@ -21,17 +21,23 @@ number = 15
 result1 = iterativeFac(number)
 result2 = recursiveFac(number)
 
-#{
+
 ##TODO
 #Lab Ex 3.1 b)
 disp("***Lab Ex 3.1 a)\n");
 
-function [y] = f(z)
-  y = (log(1/z))**(z-1);
+function [res, error] = definiteIntegral(z)
+  f = @(t)((log(1 ./ t)) .** (z-1));
+  [res, ~, ~, error] = quad(f, 0, 1);
 end;
 
-result3 = quad(@f, 0, 1)
-#}
+for i = 1 : 15
+  [definiteIntResult, error] = definiteIntegral(i);
+  printf("%d. Definite integral output: %f (Error: %f)\n", i, definiteIntResult, error);
+  printf("%d. Factorial (n - 1) output: %f\n\n", i, factorial(i - 1));
+end;
+  
+
 
 #Lab Ex 3.1 c)
 disp("***Lab Ex 3.1 c)\n");
@@ -55,4 +61,4 @@ end;
 
 
 computingTime
-plot(computingTime)
+#plot(computingTime)
