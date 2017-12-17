@@ -6,14 +6,15 @@ BYTES = 800;
 
 
 function [bitlist] = generateBitlist(len)
-  A = round(rand(8 * len,1));
+  #A = round(rand(8 * len,1));
+  A = mod(round(abs(randn(8 * len,1))),2);
   bit = dec2bin(A);
   bitlist = [''];
   for i = 1 : rows(bit)
     bitlist = [bitlist bit(i,:)];
   end;
 end;
-bitlist = generateBitlist(BYTES)
+
 
 function [ratio] = symmetryTest(bitlist)    
   zeroBits = 0;
@@ -25,7 +26,8 @@ function [ratio] = symmetryTest(bitlist)
   zeroBits;
   ratio = zeroBits / length(bitlist);
 end;
-symmetryRatio = symmetryTest(bitlist)
+
+
 
 function [symmetricBitlist] = vonNeumannFilter(bitlist)
   symmetricBitlist = [''];
@@ -44,8 +46,33 @@ function [symmetricBitlist] = vonNeumannFilter(bitlist)
   end;
 end;
 
+bitlist = generateBitlist(BYTES);
+symmetryRatio = symmetryTest(bitlist);
+
 symmetricBitlist = vonNeumannFilter(bitlist)
 symmetryRatioAfterVonNeumann = symmetryTest(symmetricBitlist)
+
+tic();
+sRVector = [];
+sRAVNVector = [];
+for i = 1 : 100
+  bitlist = generateBitlist(BYTES);
+  sRVector = [sRVector symmetryTest(bitlist)];
+  sRAVNVector = [sRAVNVector symmetryTest(vonNeumannFilter(bitlist))];
+end;
+
+function [avgDev] = getAvgDeviationFromSymmetryOptimum(symmetryRatioVector)
+  avgDev = 0;
+  
+  for i = 1 : length(symmetryRatioVector)
+    avgDev += symmetryRatioVector(i);
+  end;
+  avgDev /= length(symmetryRatioVector);
+end;
+
+avgDevWithoutVonNeumann = getAvgDeviationFromSymmetryOptimum(sRVector)
+avgDevWithVonNeumann = getAvgDeviationFromSymmetryOptimum(sRAVNVector)
+printf("Required time (s): %f\n",toc());
 
 %!test 
 assert (length(generateBitlist(2)), 16)
