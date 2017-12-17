@@ -1,29 +1,48 @@
 source("../opt.m");
 graphics_toolkit gnuplot;
 format short;
+
+
+function [lexmedData] = getLexmedData(filename)
+  file = fopen (filename, "r");
+  lexmedData = dlmread(file, ' ', 5, 0);
+  fclose(file);
+end;
+
+function [eigenValues, eigenVectors] = getEigen(dataMatrix)
+  S = cov(dataMatrix);
+  [v, lambda] = eig(S);
+  eigenValues = fliplr(lambda);
+  eigenVectors = fliplr(v);
+end;
+
+function [normalizedMatrix] = normalizeData(matrix)
+  for n = 1 : columns(matrix)
+    data_min = min(matrix(:,n));
+    data_max = max(matrix(:,n));
+    for m = 1 : rows(matrix)
+      normalizedMatrix(m,n) = (matrix(m,n) - data_min) / (data_max - data_min);
+    end;
+  end;
+end;
+
+
 disp("\n*********************************************************************");
 #Ex 4.30 a)
 disp("***Ex 4.30 a)\n");
-
-file = fopen ("lexmed.data", "r");
-lexmedData = dlmread(file, ' ', 5, 0);
-#data = dlmread(file);
-fclose(file);
-
-S_1 = cov(lexmedData);
-[m_1,n_1] = size(S_1)
-[eigenvalues_1, ~] = eig(S_1);
-
-sortedEigenvalues_1 = sort(eigenvalues_1, "descend")
-x = Vred_1 = S_1 - sortedEigenvalues_1 * eye(rank(S_1))
+lexmedData = getLexmedData("lexmed.data");
+[eigenValues, eigenVectors] = getEigen(lexmedData);
 
 
 #Ex 4.30 b)
 disp("***Ex 4.30 b)\n");
+clear;
 
-normalizedLexmedData = lexmedData ./ max(max(lexmedData));
-S_2 = cov(normalizedLexmedData);
-[m_2,n_2] = size(S_2)
-[eigenvalues_2, eigenvectors_2] = eig(S_2);
+lexmedData = getLexmedData("lexmed.data");
+normalizedData = normalizeData(lexmedData);
+[eigenValues, eigenVectors] = getEigen(normalizedData)
 
-sortedEigenvalues_2 = sort(eigenvalues_2, "descend")
+M = 2
+Vred = eigenVectors(:,1:M)
+
+
