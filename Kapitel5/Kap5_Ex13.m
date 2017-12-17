@@ -19,8 +19,8 @@ end;
 function [x] = f(x)
   x = atan(cos(x));
 end;
-
-[result, xVal] = fixedPointIteration(@f, 5, 10)
+initVal = 5;
+[result, xVal] = fixedPointIteration(@f, initVal, 10)
 
 
 #Ex 5.13 c)
@@ -28,17 +28,11 @@ disp("***Ex 5.13 c)\n");
 
 
 L = 0.471;
-precision = 10**-3;
-k = 0;
+epsilon = 10**-3;
+k = log( (epsilon ** (1-L)) / (xVal(1) - initVal) ) / log(L);
 
-function [ret] = determineAPrioriEstimate(L, k, x1, x0)
-  ret = ((L**k) / (1-L)) * abs(x1 - x0);
-end;  
-  
-while determineAPrioriEstimate(L, k, xVal(2), xVal(1)) > precision,
-  k += 1;
-end
-printf("The required k to achieve a minimum precision of %f is k = %d\n",precision,k);
+
+printf("The required k to achieve a minimum precision of %f is k = %d\n",epsilon,k);
 
 
 #Ex 5.13 d)
@@ -62,3 +56,15 @@ printf("Interval for a posteriori estimation after 8 steps: [%f : %f]", xVal(8) 
 
 #fplot (@tan, [-10, 10]);
 #set (gca, 'ylim', [-10 10])
+
+#Ex 5.13 g)
+disp("***Ex 5.13 g)\n");
+
+fPI = @(x) atan(cos(x));
+fPI_array = [5];
+for i = 1 : 10
+  fPI_array = [fPI_array fPI(fPI_array(end))];
+end
+fPI_array
+
+
