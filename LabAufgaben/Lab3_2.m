@@ -44,8 +44,8 @@ hold off;
 #}
 
 disp("\n*********************************************************************");
-#Lab Ex 3.2 b)
-disp("***Lab Ex 3.2 b)\n");
+#Lab Ex 3.2 c)
+disp("***Lab Ex 3.2 c)\n");
 clear;
 
 #IMPORTANT: 
