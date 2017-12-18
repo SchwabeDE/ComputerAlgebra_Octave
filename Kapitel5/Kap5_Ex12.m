@@ -47,6 +47,10 @@ a = -4;
 b = -1/2;
 result = intervalBisection(@f, a, b, 150)
 
+f_adjust = @(x) ((e.**(-x.**2)) / 2) - x;
+ibResult = intervalBisection(f_adjust, -5, 5, 150)
+
+#{
 xPlot = [];
 yPlot = [];
 for x = - 10 : 1 : 10
@@ -63,3 +67,4 @@ grid minor on;
 
 refresh;
 refreshdata;
+#}
