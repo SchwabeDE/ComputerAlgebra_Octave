@@ -55,12 +55,13 @@ valueTable = generateValueTable("chebyshev", -1, 1, degree)
 coefficientTable = calcCoeffTable(f, degree, valueTable)
 yCheb = calcYfromCoefficientTable(coefficientTable, x)
 
+#{
 close all;
 plot(x,yEqui)
 hold on;
 plot(x,yCheb)
 hold off;
-
+#}
 
 disp("\n*********************************************************************");
 #Ex 6.3
@@ -75,3 +76,50 @@ valueTable = generateValueTable("equidistant", -2, 10, degree)
 
 coefficientTable = calcCoeffTable(f, degree, valueTable)
 
+disp("\n*********************************************************************");
+#Ex 6.4 a)
+disp("***Ex 6.4 a)\n");
+
+#f = @(x) x.**2;
+
+degree = 100
+
+#valueTable = [-5:1:5];
+valueTable = generateValueTable("equidistant", -2, 10, degree);
+
+coefficientTable = calcCoeffTable(f, degree, valueTable);
+
+y_p = calcYfromCoefficientTable(coefficientTable, valueTable);
+y_f = f(valueTable);
+
+devidation_p_f = abs(y_p) .- abs(y_f);
+equi_maxNorm_devidation_p_f = norm(devidation_p_f, inf)
+
+
+disp("\n*********************************************************************");
+#Ex 6.4 b)
+disp("***Ex 6.4 b)\n");
+
+#f = @(x) x.**2;
+
+
+valueTable = generateValueTable("chebyshev", -2, 10, degree);
+
+coefficientTable = calcCoeffTable(f, degree, valueTable);
+
+y_p = calcYfromCoefficientTable(coefficientTable, valueTable);
+y_f = f(valueTable);
+
+devidation_p_f = abs(y_p) .- abs(y_f);
+cheb_maxNorm_devidation_p_f = norm(devidation_p_f, inf)
+
+pkg load symbolic;
+syms x
+f = e **(-x**2);
+t = taylor(f,'expansionPoint', 0, 'order', 10)
+
+t_f = @(x) ((x.**8)./24) - ((x.**6)./6) + ((x.**4)./2) - (x.**2) + 1;
+y_t_f = t_f(valueTable);
+
+devidation_t_f = abs(y_t_f) .- abs(y_f);
+taylor_maxNorm_devidation_p_f = norm(devidation_t_f, inf)
