@@ -93,6 +93,30 @@ valueTable_xy = [0 0; 1 1; 2 0; 3 1]
 xListForInterpol = [0 : 0.05 : 3];
 [a, b, c, d, yListInterpol] = naturalSplineInterpolation(valueTable_xy, xListForInterpol)
 
+#{
+plot(xListForInterpol, yListInterpol)
+hold on;
+plot(valueTable_xy(:,1), valueTable_xy(:,2))
+hold off;
+#}
+
+disp("\n*********************************************************************");
+#Ex 6.10
+disp("***Ex 6.10\n");
+
+f = @(x) e.**(-x.**2);
+
+n = 11;
+a = -2;
+b = 10;
+stepSize = abs(a-b) / (n-1);
+x = [a:stepSize:b]
+xListForInterpol = [a : 0.1 : b];
+y = f(x)
+
+valueTable_xy = [x' y']
+[a, b, c, d, yListInterpol] = naturalSplineInterpolation(valueTable_xy, xListForInterpol)
+
 plot(xListForInterpol, yListInterpol)
 hold on;
 plot(valueTable_xy(:,1), valueTable_xy(:,2))
