@@ -32,7 +32,7 @@ plot(x,y,'*')
 
 xh = [1 : 0.1 : 8]
 zh = [1 ./ (xh.**2); 1 ./ ((xh.-9).**2) ]
-yh = b'*zh
+yh = b' * zh
 hold on
 plot(xh,yh,'b-')
 hold off
