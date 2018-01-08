@@ -21,6 +21,7 @@ plot(xh,yh,'b-')
 hold off
 #}
 
+#Ansatz #1 aus oberem Beispiel
 x = [1 2 7 8]
 y = [6 1 2 4]
 
@@ -28,11 +29,34 @@ c = 1 ./ (x.**2)
 d = 1 ./ ((x.-9).**2)
 A = [c' d']
 b = A\y'
-plot(x,y,'*')
 
-xh = [1 : 0.1 : 8]
+
+#plot(x,y,'*')
+
+xh = [0 : 1 : 9]
 zh = [1 ./ (xh.**2); 1 ./ ((xh.-9).**2) ]
 yh = b' * zh
+#{
 hold on
 plot(xh,yh,'b-')
+hold off
+#}
+
+#Ansatz #2 aus Skript S.135
+e = 1 ./ (x.**2)  #Basefunction 1
+f = 1 ./ ((x.-9).**2) #Basefunction 2
+
+A = [sum(e .* e) sum(e .* f); sum(e .* f) sum(f .* f)]
+b = [sum(y .* e); sum(y .* f)]
+a = A\b
+
+f_a = @(a1, a2, x) (a1./x.**2) .+ (a2./(x.-9).**2)
+
+xf = [0 : 1 : 9]
+yf = f_a(a(1),a(2), xf)
+
+plot(x,y,'k*')
+hold on
+plot(xf,yf,'b-')
+plot(xh,yh,'c--')
 hold off
