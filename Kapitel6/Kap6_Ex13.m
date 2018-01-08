@@ -22,12 +22,12 @@ a = detCoeffFuncLSQ(data, baseFunctions)
 xf = x;    
 yf = yf(baseFunctions, a, xf)
 
-
+#{
 plot(x, y, "k*");
 hold on;
 plot(xf, yf, "r-");
 hold off;
-
+#}
 
 
 
@@ -76,6 +76,13 @@ data = [8 -16186.1
 45 -17641.9
 46 -37150.2];
 
+function [y] = yf_gen(baseFunctions, a, xf)
+  y = 0;
+  for i = 1 : length(baseFunctions)
+    y += baseFunctions{i}(xf) * a(i);
+  end;
+end;
+
 baseFunctions = {@(x)x.**4, @(x)x.**3, @(x)x.**2, @(x)x.**1, @(x)x.**0};
 
 a = detCoeffFuncLSQ(data, baseFunctions)
@@ -84,11 +91,32 @@ x = data(:,1);
 y = data(:,2);
    
 xf = x;    
-yf = yf(baseFunctions, a, xf)
+yf = yf_gen(baseFunctions, a, xf)
 
-#{
+
 plot(x, y, "k*");
 hold on;
 plot(xf, yf, "r-");
+
+
+disp("\n*********************************************************************");
+#Ex 6.13 d)
+disp("***Ex 6.13 d)\n");
+
+sumOfSquares_4degree = sum(abs(y-yf))
+
+
+baseFunctions = {@(x)x.**2, @(x)x.**1, @(x)x.**0};
+
+a = detCoeffFuncLSQ(data, baseFunctions)
+
+x = data(:,1);
+y = data(:,2);
+   
+xf = x;    
+yf = yf_gen(baseFunctions, a, xf)
+
+plot(xf, yf, "c-");
 hold off;
-#}
+
+sumOfSquares_2degree = sum(abs(y-yf))

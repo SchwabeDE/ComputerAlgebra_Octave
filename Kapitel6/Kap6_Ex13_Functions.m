@@ -1,4 +1,3 @@
-;
 function [coeffList] = detCoeffFuncLSQ(tableDP, baseFunctions)
   x = tableDP(:,1);
   y = tableDP(:,2);
@@ -10,11 +9,4 @@ function [coeffList] = detCoeffFuncLSQ(tableDP, baseFunctions)
     b(n) = sum(y .* baseFunctions{n}(x));
   end;
   coeffList = A\b';
-end;
-
-function [y] = yf(baseFunctions, a, xf)
-  y = 0;
-  for i = 1 : length(baseFunctions)
-    y += baseFunctions{i}(xf) * a(i);
-  end;
 end;
