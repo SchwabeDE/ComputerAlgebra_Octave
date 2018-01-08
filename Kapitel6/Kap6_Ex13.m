@@ -1,8 +1,40 @@
 source("../opt.m");
 graphics_toolkit gnuplot;
+
+disp("\n*********************************************************************");
+#Ex 6.13 b)
+disp("***Ex 6.13 b)\n");
+x = round(rand(100,1) * 100);
+f = @(a,x,b) a.*x .+ b;
+
+a = 1,88;
+b = 4;
+y = f(a,x,b)
+
+#add noise
+y = y .+ round(rand(100,1) * 10)
+
+data = [x y]
+
+baseFunctions = {@(x)x.**1, @(x)x.**0};
+
+a = detCoeffFuncLSQ(data, baseFunctions)
+xf = x;    
+yf = yf(baseFunctions, a, xf)
+
+
+plot(x, y, "k*");
+hold on;
+plot(xf, yf, "r-");
+hold off;
+
+
+
+
 disp("\n*********************************************************************");
 #Ex 6.13 c)
 disp("***Ex 6.13 c)\n");
+clear;
 
 data = [8 -16186.1
 9 -2810.82
@@ -44,48 +76,19 @@ data = [8 -16186.1
 45 -17641.9
 46 -37150.2];
 
-
-function [coeffList] = detCoeffFuncLSQ(tableDP, baseFunctions)
-  x = tableDP(:,1);
-  y = tableDP(:,2);
-  
-  for n = 1 : length(baseFunctions)
-    for m = 1 : length(baseFunctions)
-      A(n,m) = sum(baseFunctions{n}(x) .* baseFunctions{m}(x));
-    end;
-    b(n) = sum(y .* baseFunctions{n}(x));
-  end;
-  coeffList = A\b';
-
-  #{
-  f_a = @(a1, a2, x) (a1./x.**2) .+ (a2./(x.-9).**2)
-
-  xf = [0 : 1 : 9]
-  yf = f_a(a(1),a(2), xf)
-  #}
-end;
-
-
 baseFunctions = {@(x)x.**4, @(x)x.**3, @(x)x.**2, @(x)x.**1, @(x)x.**0};
 
 a = detCoeffFuncLSQ(data, baseFunctions)
 
 x = data(:,1);
 y = data(:,2);
-
-function [y] = yf(baseFunctions, a, xf)
-  y = 0;
-  for i = 1 : length(baseFunctions)
-    y += baseFunctions{i}(xf) * a(i);
-  end;
-end;
-    
    
 xf = x;    
 yf = yf(baseFunctions, a, xf)
 
+#{
 plot(x, y, "k*");
 hold on;
 plot(xf, yf, "r-");
 hold off;
-
+#}
