@@ -1,6 +1,6 @@
 source("../opt.m");
 graphics_toolkit gnuplot;
-pkg load symbolic;
+#pkg load symbolic;
 disp("\n*********************************************************************");
 #Lab 5.1 a)
 disp("***Lab 5.1 a)\n");
