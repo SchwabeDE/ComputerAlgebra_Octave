@@ -18,8 +18,8 @@ function [area] = naiveMonteCarloUnitCircle(f_unitCircle, randX, randY, B, H)
   area = numberHitsUnderCurve / numberHitsInsideRectangle * B * H;
 end;
 
-randNumbers = 50000000;
-#randNumbers = 10;
+#randNumbers = 50000000;
+randNumbers = 1;
 randX = rand(randNumbers,1);
 randY = rand(randNumbers,1);
 
@@ -40,3 +40,44 @@ b = 1
 grid = [-1 : 0.0001: 1];
 
 mMCUC = meanMonteCarloUnitCircle(f_unitCircle, randX, a, b) * 2
+
+disp("\n*********************************************************************");
+#Ex 7.1 b)
+disp("***Ex 7.1 b)\n");
+#{
+trials = 5000
+numberTrialsResults = [];
+for randNumbers = 1 : trials
+  randX = rand(randNumbers,1);
+  randY = rand(randNumbers,1);
+  nMCUC = naiveMonteCarloUnitCircle(f_unitCircle, randX, randY, B, H);
+  mMCUC = meanMonteCarloUnitCircle(f_unitCircle, randX, a, b) * 2;
+  numberTrialsResults= [numberTrialsResults; randNumbers nMCUC mMCUC];
+end;
+
+
+plot(numberTrialsResults(:,1), numberTrialsResults(:,2), "k-")
+hold on;
+plot(numberTrialsResults(:,1), numberTrialsResults(:,3), "r-")
+hold off;
+#}
+
+
+disp("\n*********************************************************************");
+#Ex 7.1 c)
+disp("***Ex 7.1 c)\n");
+
+function [area] = meanMonteCarloUnitCircle4D(f_unitCircle4D, randW, randX, randZ, a, b)
+  f_values = f_unitCircle4D(randW, randX, randZ);
+  
+  area = ( (b - a) / length(f_values) ) * sum(f_values);
+end;
+
+f_unitCircle4D = @(w,x,z) sqrt(1 .- w.**2 .- x.**2 .- z.**2)
+
+randNumbers = 1000000;
+randW = rand(randNumbers,1);
+randX = rand(randNumbers,1);
+randZ = rand(randNumbers,1);
+
+mMCUC_4D = meanMonteCarloUnitCircle4D(f_unitCircle, randW, randX, randZ, a, b) * 2
